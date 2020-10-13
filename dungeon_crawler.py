@@ -421,6 +421,7 @@ class GameManager():
                         self.items.append(bomb)
 
     #---------------------------------------------------------------------------------------------------------------------------------------
+ 
     def initQuest(self):
         self.easyQuest = 0
         self.easyQuestList = [Quest("Buy an item from the shop", 1, self.buyItemQuest),
@@ -800,7 +801,13 @@ class PlayerInfo():
                                     canPickup = False
                                     self.addMessage(Text_Attributes.BOLD + "There are still monsters in the room" + Text_Attributes.END)
                             if canPickup:
-                                items[i].pickup(self)
+                                if items[i].pickup(self) == 1:
+                                    '''
+                                    coins = random.randint(1,2)
+                                    player.coinBag
+                                    '''
+                                    map[moveY][moveX] = "!"
+                                    return "item"
                             break
                     self.position.x = moveX
                     self.position.y = moveY
@@ -1431,7 +1438,7 @@ class Chest(Item):
         if self.randomChest >= 1 and self.randomChest <= 59:
             self.name = "Chest"
         elif self.randomChest >= 60 and self.randomChest <= 89:
-            self.name = "Iron Chest"
+            self.name = "Stone Chest"
         elif self.randomChest >= 90 and self.randomChest <= 99:
             self.name = "Gold Chest"
         elif self.randomChest == 100:
@@ -1442,36 +1449,39 @@ class Chest(Item):
     def pickup(self, player):
         self.isDead = True
         if self.name == "Chest":
-            return -1
+            player.addMessage(Text_Attributes.BOLD + player.name + " opened a(n) " + self.name + Text_Attributes.END)
+            return 1
         elif self.name == "Stone Chest":
             openChest = input("Would you like to open this chest for 1 bomb? ").lower()
             if openChest == "yes":
                 if player.bombInventory > 0:
-                   player.bombInventory -= 1
+                    player.bombInventory -= 1
+                    player.addMessage(Text_Attributes.BOLD + player.name + " opened a(n) " + self.name + Text_Attributes.END)
                 else:
                     player.addMessage(Text_Attributes.BOLD + "You don't have enough bombs to do this." + Text_Attributes.END)
             else:
-                return -1
+                return 2
         elif self.name == "Gold Chest":
             openChest = input("Would you like to open this chest for 1 key? ").lower()
             if openChest == "yes":
                 if player.keyInventory > 0:
                     player.keyInventory -= 1
+                    player.addMessage(Text_Attributes.BOLD + player.name + " opened a(n) " + self.name + Text_Attributes.END)
                 else:
                     player.addMessage(Text_Attributes.BOLD + "You don't have enough keys to do this." + Text_Attributes.END)
             else:
-                return -1
+                return 3
         elif self.name == "Diamond Chest":
             openChest = input("Would you like to open this chest for 2 keys and 2 bombs? ").lower()
             if openChest == "yes":
                 if player.bombInventory > 1 and player.keyInventory > 1:
                     player.keyInventory -= 2
                     player.bombInventory -= 2
+                    player.addMessage(Text_Attributes.BOLD + player.name + " opened a(n) " + self.name + Text_Attributes.END)
                 else:
                     player.addMessage(Text_Attributes.BOLD + "You don't have enough keys/bombs to do this." + Text_Attributes.END)
             else:
-                return -1
-        player.addMessage(Text_Attributes.BOLD + player.name + " opened a(n) " + self.name + Text_Attributes.END)
+                return 4
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1968,10 +1978,10 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Artifacts, Finish Vending Machine Quest
+#HomeWork: Artifacts, Finish Vending Machine Quest, Fog of War
 
 
-#Extra Homework: Add chests, Try to find emoji's[All emojis are too big] 
+#Extra Homework: Add chests, Try to find emoji's[All emojis are too big], Quests
 
 
 #New door always leads to boss room
