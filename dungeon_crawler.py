@@ -195,6 +195,7 @@ class GameManager():
             self.spawnHealing()
             self.spawnWeapon()
             self.spawnArmor()
+            self.spawnChest()
         else:
             self.spawnNPCItems()
 
@@ -209,8 +210,8 @@ class GameManager():
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def spawnEnemies(self):
-        numberOfMorons = 2
-        for __ in range(numberOfMorons):
+        numberOfMorons = random.randint(1,3)
+        while numberOfMorons > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
             if self.map[YPosition][XPosition] == " ":
@@ -221,8 +222,9 @@ class GameManager():
                 if foundEnemy == False:
                     enemy = MoronEnemy(XPosition, YPosition, "Zombie", 10, 1, 3, 10, 1, 5, random.randint(3, 7))
                     self.enemies.append(enemy)
-        numberOfTanks = 1
-        for __ in range(numberOfTanks):
+                    numberOfMorons -= 1
+        numberOfTanks = random.randint(0,1)
+        while numberOfTanks > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
             if self.map[YPosition][XPosition] == " ":
@@ -233,11 +235,12 @@ class GameManager():
                 if foundEnemy == False:
                     enemy = TankEnemy(XPosition, YPosition, "Dragon", 20, 5, 5, 5, 1, 10, random.randint(10, 20))
                     self.enemies.append(enemy)
-        numberOfGlassCannons = 1
-        for __ in range(numberOfGlassCannons):
+                    numberOfTanks -= 1
+        numberOfGlassCannons = random.randint(0,2)
+        while numberOfGlassCannons > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
-            if self.map[YPosition][XPosition] == "Goon":
+            if self.map[YPosition][XPosition] == " ":
                 foundEnemy = False
                 for i in range(len(self.enemies)):
                     if self.enemies[i].position.x == XPosition and self.enemies[i].position.y == YPosition:
@@ -245,8 +248,9 @@ class GameManager():
                 if foundEnemy == False:
                     enemy = GlassCannon(XPosition, YPosition, "Creeper", 3, 1, 15, 3, 1, 15, random.randint(7, 23))
                     self.enemies.append(enemy)
-        numberOfSpeedyEnemies = 3
-        for __ in range(numberOfSpeedyEnemies):
+                    numberOfGlassCannons -= 1
+        numberOfSpeedyEnemies = random.randint(1,4)
+        while numberOfSpeedyEnemies > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
             if self.map[YPosition][XPosition] == " ":
@@ -257,10 +261,11 @@ class GameManager():
                 if foundEnemy == False:
                     enemy = SpeedyEnemy(XPosition, YPosition, "Spider", 5, 1, 3, 5, 2, 5, random.randint(3, 10))
                     self.enemies.append(enemy)
+                    numberOfSpeedyEnemies -= 1
 
     def spawnCoins(self):
-        numberOfCoins = 3
-        for __ in range(numberOfCoins):
+        numberOfCoins = random.randint(1,3)
+        while numberOfCoins > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
             if self.map[YPosition][XPosition] == " ":
@@ -273,13 +278,14 @@ class GameManager():
                     coin.determineCoin()
                     self.itemID += 1
                     self.items.append(coin)
+                    numberOfCoins -= 1
                 '''
                 with open('TotalCoins.txt', 'r') as c:
                     coin.totalCoins = c.readLines()
                 '''
 
     def spawnHealing(self):
-        numberOfHealing = 1
+        numberOfHealing = random.randint(0,1)
         for __ in range(numberOfHealing):
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
@@ -293,13 +299,14 @@ class GameManager():
                     healing.determineHealing()
                     self.itemID += 1
                     self.items.append(healing)
+                    numberOfHealing -= 1
 
     def spawnWeapon(self):
-        numberOfWeapon = random.randint(1, 7)
+        weaponSpawnChance = random.randint(0, 7)
         weaponSpawn = 0
-        if numberOfWeapon == 6:
+        if weaponSpawnChance == 1:
             weaponSpawn = 1
-        for __ in range(weaponSpawn):
+        while weaponSpawn > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
             if self.map[YPosition][XPosition] == " ":
@@ -312,13 +319,14 @@ class GameManager():
                     weapon.determineWeapon()
                     self.itemID += 1
                     self.items.append(weapon)
+                    weaponSpawn -= 1
 
     def spawnArmor(self):
-        numberOfArmor = random.randint(1, 10)
+        armorSpawnChance = random.randint(1, 10)
         armorSpawn = 0
-        if numberOfArmor == 7:
+        if armorSpawnChance == 1:
             armorSpawn = 1
-        for __ in range(armorSpawn):
+        while armorSpawn > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
             if self.map[YPosition][XPosition] == " ":
@@ -331,25 +339,25 @@ class GameManager():
                     armor.determineArmor()
                     self.itemID += 1
                     self.items.append(armor)
+                    armorSpawn -= 1
 
-    '''
     def spawnChest(self):
-        if len(self.enemies) == 0:
-            chestSpawnChance = random.randint(1, 3)
-            chestSpawn = 0
-            if chestSpawnChance == 1:
-                chestSpawn = 1
-            for __ in range(chestSpawn):
-                XPosition = random.randint(0, len(self.map[0]) -1)
-                YPosition = random.randint(0, len(self.map) -1)
-                if self.map[YPosition][XPosition] == " ":
-                    foundChest = False
-                    for i in range(len(self.items)):
-                        if self.items[i].position.x == XPosition and self.items[i].position.y == YPosition:
-                            foundChest = True     
-                    if foundChest == False:
-                        chest = Chest(XPosition, YPosition, self.itemID)
-    '''
+        chestSpawnChance = random.randint(1, 3)
+        chestSpawn = 0
+        if chestSpawnChance == 1:
+            chestSpawn = 1
+        while chestSpawn > 0:
+            XPosition = random.randint(0, len(self.map[0]) -1)
+            YPosition = random.randint(0, len(self.map) -1)
+            if self.map[YPosition][XPosition] == " ":
+                foundChest = False
+                for i in range(len(self.items)):
+                    if self.items[i].position.x == XPosition and self.items[i].position.y == YPosition:
+                        foundChest = True     
+                if foundChest == False:
+                    chest = Chest(XPosition, YPosition, self.itemID)
+                    self.items.append(chest)
+                    chestSpawn -= 1
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -786,7 +794,13 @@ class PlayerInfo():
                 if moveIntoEnemy == -1:
                     for i in range(len(items)):
                         if items[i].position.x == moveX and items[i].position.y == moveY:
-                            items[i].pickup(self)
+                            canPickup = True
+                            if items[i].type == "chest":
+                                if len(enemies) != 0:
+                                    canPickup = False
+                                    self.addMessage(Text_Attributes.BOLD + "There are still monsters in the room" + Text_Attributes.END)
+                            if canPickup:
+                                items[i].pickup(self)
                             break
                     self.position.x = moveX
                     self.position.y = moveY
@@ -1405,58 +1419,59 @@ class Chest(Item):
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def __init__(self, x, y, id_):
-        self.randomChest = random.randint(50, 99)
+        self.randomChest = random.randint(1, 100)
         self.name = 0
         super().__init__(x, y, id_, "chest")
         self.displayCharacter = "C"
+        self.determineChest()
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def determineChest(self):
-        if self.randomChest >= 81 and self.randomChest <= 99:
+        if self.randomChest >= 1 and self.randomChest <= 59:
             self.name = "Chest"
-        elif self.randomChest >= 66 and self.randomChest <= 80:
+        elif self.randomChest >= 60 and self.randomChest <= 89:
             self.name = "Iron Chest"
-        elif self.randomChest >= 51 and self.randomChest <= 65:
+        elif self.randomChest >= 90 and self.randomChest <= 99:
             self.name = "Gold Chest"
-        elif self.randomChest == 50:
+        elif self.randomChest == 100:
             self.name = "Diamond Chest"
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def pickup(self, player):
         self.isDead = True
-        if self.randomChest == "Chest":
+        if self.name == "Chest":
             return -1
-        elif self.randomChest == "Stone Chest":
+        elif self.name == "Stone Chest":
             openChest = input("Would you like to open this chest for 1 bomb? ").lower()
             if openChest == "yes":
                 if player.bombInventory > 0:
                    player.bombInventory -= 1
                 else:
-                    print("You don't have enough bombs to do this.")
+                    player.addMessage(Text_Attributes.BOLD + "You don't have enough bombs to do this." + Text_Attributes.END)
             else:
                 return -1
-        elif self.randomChest == "Gold Chest":
+        elif self.name == "Gold Chest":
             openChest = input("Would you like to open this chest for 1 key? ").lower()
             if openChest == "yes":
                 if player.keyInventory > 0:
                     player.keyInventory -= 1
                 else:
-                    print("You don't have enough keys to do this.")
+                    player.addMessage(Text_Attributes.BOLD + "You don't have enough keys to do this." + Text_Attributes.END)
             else:
                 return -1
-        elif self.randomChest == "Diamond Chest":
+        elif self.name == "Diamond Chest":
             openChest = input("Would you like to open this chest for 2 keys and 2 bombs? ").lower()
             if openChest == "yes":
                 if player.bombInventory > 1 and player.keyInventory > 1:
                     player.keyInventory -= 2
                     player.bombInventory -= 2
                 else:
-                    print("You don't have enough keys/bombs to do this.")
+                    player.addMessage(Text_Attributes.BOLD + "You don't have enough keys/bombs to do this." + Text_Attributes.END)
             else:
                 return -1
-        player.addMessage(player.name, "opened a chest")
+        player.addMessage(Text_Attributes.BOLD + player.name + " opened a(n) " + self.name + Text_Attributes.END)
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1925,7 +1940,7 @@ class Text_Attributes():
     RED = '\033[91m'
     YELLOW = '\033[93m'
     GREEN = '\033[92m'
-    BRIGHTGREEN: '\u001b[32;1m'
+    BRIGHTGREEN = '\u001b[32;1m'
     BLUE = '\033[94m'
     CYAN = '\033[96m'
     DARKCYAN = '\033[36m'
@@ -1953,10 +1968,10 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: 
+#HomeWork: Artifacts, Finish Vending Machine Quest
 
 
-#Extra Homework: Add chests, Try to find emoji's[All emojis are too big], Artifacts.
+#Extra Homework: Add chests, Try to find emoji's[All emojis are too big] 
 
 
 #New door always leads to boss room
