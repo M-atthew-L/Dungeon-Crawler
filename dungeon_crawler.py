@@ -1981,4 +1981,4 @@ Now you must fight through the hordes of Kargons to reach their leader. You need
 #HomeWork: Artifacts, Finish Vending Machine Quest, Fog of War, Make rooms odd number length, make sure walls dont block corridor holes.
 
 
-#Extra Homework: Try to find emoji's[All emojis are too big], Quests
+#Extra Homework: Try to find emoji's[All emojis are too big], New Quests
