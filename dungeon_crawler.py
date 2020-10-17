@@ -1,6 +1,14 @@
 import os
 import subprocess
-import getch
+try:
+    import getch
+except:
+    print("getch module must be installed unless you are running windows")
+    try:
+        import msvcrt
+        print("successfuly imported msvcrt")
+    except:
+        print("You are not running on windows")
 import random
 import math
 import Maps
@@ -81,7 +89,7 @@ class GameManager():
 
         self.initMap()
 
-        self.camera = Camera(1, 1, 100, 25)
+        self.camera = Camera(self.player.position.x, self.player.position.y, 100, 25)
 
         self.initQuest()
         self.NO_QUEST = Quest("nocurrentquest", 0, lambda x: -1)
@@ -98,13 +106,14 @@ class GameManager():
                     constructedLine += self.player.displayCharacter
                 else: 
                     foundEnemy = False
+                    foundItem = False
                     for i in range(len(self.enemies)):
                         if x == self.enemies[i].position.x and y == self.enemies[i].position.y:
                             constructedLine += self.enemies[i].displayCharacter
                             foundEnemy = True
                             break
                     if foundEnemy == False:
-                        foundItem = False
+                        
                         for i in range(len(self.items)):
                             if x == self.items[i].position.x and y == self.items[i].position.y:
                                 constructedLine += self.items[i].displayCharacter
@@ -739,11 +748,17 @@ class PlayerInfo():
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def playerInput(self, map, enemies, items):
-        characterMove = getch.getch()
+        characterMove = ""
+        try:
+            characterMove = getch.getch()
+        except:
+            characterMove = msvcrt.getch().decode('utf-8')
+
         moveX = 0
         moveY = 0
         if characterMove == 'r':
             return -1
+
         if characterMove == 'w':
             moveY = self.position.y - 1
             moveX = self.position.x
