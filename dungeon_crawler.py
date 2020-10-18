@@ -559,7 +559,16 @@ class GameManager():
         return -1
 
     def buyItemFromVendingMachine(self, quest):
-        pass
+        if quest.questProgress == -1:
+            self.player.hasPlayerTraded = False
+            quest.questProgress = False
+        else:
+            if self.player.hasPlayerUsedVendingMachine:
+                self.player.addMessage(Text_Attributes.BOLD + "You have finished your quest" + Text_Attributes.END)
+                self.currentQuest = self.NO_QUEST
+                self.player.hasPlayerTraded = False
+                return quest.determineReward()
+        return -1
 
     def depositAtLeast100CoinsQuest(self, quest):
         if quest.questProgress == -1:
@@ -585,7 +594,7 @@ class GameManager():
 
     def tradeWithTheTraderQuest(self, quest):
         if quest.questProgress == -1:
-            self.player.hasPlayerTraded = False
+            self.player.hasPlayerUsedVendingMachine = False
             quest.questProgress = False
         else:
             if self.player.hasPlayerTraded:
@@ -712,6 +721,7 @@ class PlayerInfo():
 
         self.hasStatUpgraded = False
         self.hasPlayerTraded = False
+        self.hasPlayerUsedVendingMachine = False
         self.dragonKills = 0
         self.creeperKills = 0
         self.zombieKills = 0
@@ -1993,7 +2003,7 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Artifacts, Finish Vending Machine Quest, Fog of War, Make rooms odd number length, make sure walls dont block corridor holes.
+#HomeWork: Artifacts, Finish Vending Machine Quest, Fog of War.
 
 
 #Extra Homework: Try to find emoji's[All emojis are too big], New Quests
