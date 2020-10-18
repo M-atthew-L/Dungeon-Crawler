@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-**\.venv
-=======
 **/.venv
->>>>>>> 840d716cf1cddb4044d77a44765d131497beede9
+**/__pycache__
+**/.vscode
+
