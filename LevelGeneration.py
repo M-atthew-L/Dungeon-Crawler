@@ -161,9 +161,9 @@ class LevelGenerator():
             height =  bottomLeftY if bottomLeftY > height else height
 
         map = []
-        for y in range(height + 1):
+        for y in range(height):
             map.append([])
-            for x in range(width + 1):
+            for x in range(width):
                 for room in self.rooms:
                     if room.isPositionInside(x, y):
                         roomY = y - room.rect.topRight.y
