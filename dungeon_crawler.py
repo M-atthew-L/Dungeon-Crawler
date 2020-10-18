@@ -76,9 +76,11 @@ class GameManager():
         #randomRoom = random.randint(0,len(Maps.UniqueRooms.ROOMS)-1)
         self.map = self.convertMapData(Maps.UniqueRooms.STARTING_ROOM)
         self.levelGenerator = LevelGeneration.LevelGenerator(Maps.UniqueRooms.ROOMS)
-        self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
-        #self.levelGenerator.GenerateLevel(15, 5, 8, 5)
-        self.map = self.levelGenerator.rooms[0].data
+        #self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
+        self.levelGenerator.GenerateLevel(15, 5, 8, 5)
+        self.map = self.levelGenerator.BuildMapFromRoomData()
+        #self.map = self.levelGenerator.rooms[0].data
+        
         self.player = PlayerInfo(input("What is your name? "), 0, 1, 1)
 
         self.enemies = []
@@ -90,6 +92,8 @@ class GameManager():
         self.initMap()
 
         self.camera = Camera(self.player.position.x, self.player.position.y, 100, 25)
+
+        
 
         self.initQuest()
         self.NO_QUEST = Quest("nocurrentquest", 0, lambda x: -1)
@@ -178,6 +182,7 @@ class GameManager():
             setQuestReward = self.currentQuest.checkQuestObjective(self.currentQuest)
             if setQuestReward != -1:
                 self.player.coinBag += setQuestReward
+
             
 
     def restartLevel(self, pickNewRoom = False):

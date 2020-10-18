@@ -44,6 +44,12 @@ class Room():
         self.position.y = y
         self.rect = Rectangle(Vec2( self.position.x, self.position.y + self.height ), Vec2( self.position.x + self.width, self.position.y ) )
 
+    def isPositionInside(self, x:int, y:int) -> bool:
+        if y <= self.rect.bottomLeft.y and self.rect.topRight.y <= y and x >= self.rect.bottomLeft.x and x <= self.rect.topRight.x:
+            return True
+        else:
+            return False
+
     #---------------------------------------------------------------------------------------------------------------------------------------
 
 class LevelGenerator():
@@ -91,6 +97,7 @@ class LevelGenerator():
                 direction = random.randint(2, 3)
             elif directionsToGo == 2:
                 direction = random.randint(1, 2)
+            lastDirection = direction
             for d in range(1,4):
                 rand = random.randint(1,3)
                 if rand == 1 or d == direction:
@@ -135,10 +142,46 @@ class LevelGenerator():
                         numberOfRooms += 1
                         self.rooms.append(room)
                     if d == direction:
-                        lastX = x
-                        lastY = y
+                        lastX = room.position.x
+                        lastY = room.position.y
                         lastDirection = d
                         numberOfMainRooms += 1
+
+    def BuildMapFromRoomData(self) -> list(list()):
+        
+        for room in self.rooms:
+            room.hasBuiltRoom = False
+        
+        width = 0
+        height = 0
+        for room in self.rooms:
+            topRightX = room.rect.topRight.x
+            bottomLeftY = room.rect.bottomLeft.y
+            width = topRightX if topRightX > width else width
+            height =  bottomLeftY if bottomLeftY > height else height
+
+        map = []
+        for y in range(height):
+            map.append([])
+            for x in range(width):
+                for room in self.rooms:
+                    if room.isPositionInside(x, y):
+                        roomY = y - room.rect.topRight.y
+                        if roomY >= len(room.data):
+                            continue
+
+                        roomX = x - room.rect.bottomLeft.x
+                        if roomX >= len(room.data[roomY]):
+                            continue
+                       
+                        map[y].append(room.data[roomY][roomX])
+                        break
+                    else:
+                        map[y].append(" ")
+        
+        return map
+
+            
 
 #player can spawn in any of the main rooms, not just top right.
     #---------------------------------------------------------------------------------------------------------------------------------------
