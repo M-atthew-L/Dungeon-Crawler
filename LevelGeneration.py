@@ -56,8 +56,8 @@ class LevelGenerator():
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
-    def GetCurrentMapData(self) -> list(list()):
-        return self.culledMapData
+    def GetCurrentMapData(self, camera, overlays) -> list(list()):
+        return self._getDrawRoomData(camera, overlays)
 
     def GetRandomPointInCircle(self, radius) -> Vec2:
         t = 2*math.pi*random.random()
@@ -86,6 +86,7 @@ class LevelGenerator():
         mainRoomCap = random.randint(minMainRooms, maxMainRooms)
         while numberOfMainRooms < mainRoomCap:
             directionsToGo = random.randint(1,2)
+            direction = 1
             if directionsToGo == 1:
                 direction = random.randint(2, 3)
             elif directionsToGo == 2:
@@ -212,8 +213,8 @@ class LevelGenerator():
                 for i in range(len(intersectionData)):
                     intersectedRoom = intersectionData[i]
                     if y <= intersectedRoom.bottomLeft.y and intersectedRoom.topRight.y <= y and x >= intersectedRoom.bottomLeft.x and x <= intersectedRoom.topRight.x:
-                        topLeftX = intersectedRoom.bottomLeft.x
-                        topLeftY = intersectedRoom.topRight.y
+                        topLeftX = roomsToRender[i].rect.bottomLeft.x 
+                        topLeftY = roomsToRender[i].rect.topRight.y
                         
                         
                         roomY = y - topLeftY
@@ -222,8 +223,9 @@ class LevelGenerator():
 
                         roomX = x - topLeftX
                         if roomX >= len(roomsToRender[i].data[roomY]):
+                            row += 1
                             continue
-                            
+                        
                         mapToRender[col].append(roomsToRender[i].data[roomY][roomX])
                         foundRoom = True
                         row += 1
@@ -243,7 +245,7 @@ class LevelGenerator():
             for e in lst:
                 x = e.position.x
                 y = e.position.y
-                if x > camera.rect.bottomLeft.x and x < camera.rect.topRight.x and y < camera.rect.bottomLeft.y and y > camera.rect.topRight.y:
+                if x >= camera.rect.bottomLeft.x and x <= camera.rect.topRight.x and y <= camera.rect.bottomLeft.y and y >= camera.rect.topRight.y:
                     mapToRender[y - camera.rect.topRight.y][x - camera.rect.bottomLeft.x] = e.displayCharacter
                     
                     
