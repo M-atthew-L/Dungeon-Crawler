@@ -24,7 +24,7 @@ from Camera import Camera
 '''
 Procedurally generated levels,
 #leveling up and permanent death
-items and combat
+#items and combat
 Vision / Fog of War?
 enemies (homing rocket bomber, necromancer, stealth enemy, stunner, poison, healer, tracker, gadget enemy, trapper, buff-er, robber[takes your items], king[upgrades other enemies])
 companions
@@ -444,7 +444,7 @@ class GameManager():
                               Quest("Find a weapon on the ground", 1, self.findAWeaponQuest),
                               Quest("Use some healing", 1, self.useHealingQuest),
                               Quest("Break a weapon or armor", 1, self.breakWeaponOrArmorQuest),
-                              Quest("Buy an item from a vending machine", 1, self.buyItemQuest),
+                              Quest("Buy an item from a vending machine", 1, self.buyItemFromVendingMachineQuest),
                               Quest("Deposit at least 100 coins in the ATM", 1, self.depositAtLeast100CoinsQuest),
                               Quest("Upgrade one of your base stats", 1, self.upgradeBaseStatQuest),
                               Quest("Trade with the trader", 1, self.tradeWithTheTraderQuest)]
@@ -563,15 +563,15 @@ class GameManager():
                 return quest.determineReward()
         return -1
 
-    def buyItemFromVendingMachine(self, quest):
+    def buyItemFromVendingMachineQuest(self, quest):
         if quest.questProgress == -1:
-            self.player.hasPlayerTraded = False
+            self.player.hasPlayerUsedVendingMachine = False
             quest.questProgress = False
         else:
             if self.player.hasPlayerUsedVendingMachine:
                 self.player.addMessage(Text_Attributes.BOLD + "You have finished your quest" + Text_Attributes.END)
                 self.currentQuest = self.NO_QUEST
-                self.player.hasPlayerTraded = False
+                self.player.hasPlayerUsedVendingMachine = False
                 return quest.determineReward()
         return -1
 
@@ -599,7 +599,7 @@ class GameManager():
 
     def tradeWithTheTraderQuest(self, quest):
         if quest.questProgress == -1:
-            self.player.hasPlayerUsedVendingMachine = False
+            self.player.hasPlayerTraded = False
             quest.questProgress = False
         else:
             if self.player.hasPlayerTraded:
@@ -918,17 +918,21 @@ class PlayerInfo():
             elif map[moveY][moveX] == "C":
                 Collector.buyFromPlayer(self)
             elif map[moveY][moveX] == "V":
-                if VendingMachine.dispenseItem(self) == "item":
+                checkVendingMachine = VendingMachine.dispenseItem(self)
+                if checkVendingMachine == "item":
                     map[moveY + 1][moveX] = "!"
                     return "item"
-                elif VendingMachine.dispenseItem(self) == "broke":
+                elif checkVendingMachine == "broke":
                     map[moveY][moveX] = " "
             elif map[moveY][moveX] == "X":
-                questDifficulty = int(input("Would you like an easy quest[1] or a hard quest[2]? "))
-                if questDifficulty == 1:
-                    return "easyquest"
-                elif questDifficulty == 2:
-                    return "hardquest"
+                try:
+                    questDifficulty = int(input("Would you like an easy quest[1] or a hard quest[2]? "))
+                    if questDifficulty == 1:
+                        return "easyquest"
+                    elif questDifficulty == 2:
+                        return "hardquest"
+                except:
+                    pass
             else:
                 return self.playerInput(map, enemies, items)
         clear()
@@ -1749,17 +1753,19 @@ class VendingMachine():
 
     @staticmethod
     def dispenseItem(player):
-        print(Text_Attributes.BOLD + "Would you like to pay 50 coins for a random item? " + Text_Attributes.END)
-        dispenseItem = input().lower()
-        if dispenseItem == "yes":
-            player.coinBag -= 50
-            vendingMachineBreaks = random.randint(1,5)
-            if vendingMachineBreaks == 1:
-                player.addMessage(Text_Attributes.BOLD + "The vending machine broke!" + Text_Attributes.END)
-                return "broke"
-            return "item"
+        if player.coinBag >= 50:
+            print(Text_Attributes.BOLD + "Would you like to pay 50 coins for a random item? " + Text_Attributes.END)
+            dispenseItem = input().lower()
+            if dispenseItem == "yes":
+                player.hasPlayerUsedVendingMachine = True
+                player.coinBag -= 50
+                vendingMachineBreaks = random.randint(1,5)
+                if vendingMachineBreaks == 1:
+                    player.addMessage(Text_Attributes.BOLD + "The vending machine broke!" + Text_Attributes.END)
+                    return "broke"
+                return "item"
         else:
-            pass
+            player.addMessage(Text_Attributes.BOLD + "You do not have enough coins to do that" + Text_Attributes.END)
 
 
 
