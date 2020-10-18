@@ -763,12 +763,10 @@ class PlayerInfo():
             characterMove = getch.getch()
         except:
             characterMove = msvcrt.getch().decode('utf-8')
-
         moveX = 0
         moveY = 0
         if characterMove == 'r':
             return -1
-
         if characterMove == 'w':
             moveY = self.position.y - 1
             moveX = self.position.x
@@ -1810,16 +1808,15 @@ class HealingArtifact(Artifact):
         
     def determineExtraHealthArtifact(self):
         if self.healthArtifactValue >= 1 and self.healthArtifactValue <= 5:
-            self.name = ""
-            pass
+            self.name = "Mineral Water"
         elif self.healthArtifactValue >= 6 and self.healthArtifactValue <= 10:
-            pass
+            self.name = "Health Elixir"
         elif self.healthArtifactValue >= 11 and self.healthArtifactValue <= 15:
-            pass
+            self.name = "Golden Carrot"
         elif self.healthArtifactValue >= 16 and self.healthArtifactValue <= 20:
-            pass
+            self.name = "Maxim Tomato"
         elif self.healthArtifactValue >= 21 and self.healthArtifactValue <= 25:
-            pass
+            self.name = "Heart Container"
 
 class DamageArtifact(Artifact):
 
@@ -1830,8 +1827,14 @@ class DamageArtifact(Artifact):
         self.displayCharacter = "2"
 
     def extraDamageArtifact(self):
-        
-        pass
+        if self.damageArtifactValue >= 1 and self.damageArtifactValue <= 3:
+            self.name = "Sharpness"
+        elif self.damageArtifactValue >= 4 and self.damageArtifactValue <= 6:
+            self.name = "Whet Stone"
+        elif self.damageArtifactValue >= 7 and self.damageArtifactValue <= 8:
+            self.name = "Dramatic Music"
+        elif self.damageArtifactValue >= 9 and self.damageArtifactValue <= 10:
+            self.name = "Sad backstory"
 
 class ArmorNegationArtifact(Artifact):
 
@@ -1842,8 +1845,10 @@ class ArmorNegationArtifact(Artifact):
         self.displayCharacter = "3"
 
     def extraArmorNegationArtifact(self):
-        
-        pass
+        if self.armorNegationArtifactValue >= 1 / 100 and self.armorNegationArtifactValue <= 5 / 100:
+            self.name = "Plot Armor"
+        elif self.armorNegationArtifactValue >= 6 / 100 and self.armorNegationArtifactValue <= 10 / 100:
+            self.name = "Battle Scars"
 
 class CritChanceArtifact(Artifact):
 
@@ -1854,8 +1859,10 @@ class CritChanceArtifact(Artifact):
         self.displayCharacter = "4"
 
     def higherCritChanceArtifact(self):
-        
-        pass
+        if self.critChanceArtifactValue >= 1 / 100 and self.critChanceArtifactValue <= 5 / 100:
+            self.name = "Training Dummy"
+        elif self.critChanceArtifactValue >= 6 / 100 and self.critChanceArtifactValue <= 10 / 100:
+            self.name = "Four Leaf Clover"
 
 class CritDamageArtifact(Artifact):
 
@@ -1866,18 +1873,24 @@ class CritDamageArtifact(Artifact):
         self.displayCharacter = "5"
 
     def higherCritDamageArtifact(self):
-        pass
+        if self.critDamageArtifactValue >= 1 / 100 and self.critDamageArtifactValue <= 5 / 100:
+            self.name = "Brass Knuckles"
+        elif self.critDamageArtifactValue >= 6 / 100 and self.critDamageArtifactValue <= 10 / 100:
+            self.name = "Anger"
 
 class EvasionArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.evasionChanceArtifactCalue = random.randint(1 / 100, 10 / 100)
+        self.evasionChanceArtifactValue = random.randint(1 / 100, 10 / 100)
         self.name = 0
         super().__init__(x, y, id_, "evasion artifact")
         self.displayCharacter = "6"
 
     def higherEvasionChanceArtifact(self):
-        pass
+        if self.evasionChanceArtifactValue >= 1 / 100 and self.evasionChanceArtifactValue <= 5 / 100:
+            self.name = "Invisibilty Cloak"
+        elif self.evasionChanceArtifactValue >= 6 / 100 and self.evasionChanceArtifactValue <= 10 / 100:
+            self.name = "High ping"
 
 
 class Inventory():
@@ -2003,7 +2016,7 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Artifacts, Finish Vending Machine Quest, Fog of War.
+#HomeWork: Fog of War.
 
 
 #Extra Homework: Try to find emoji's[All emojis are too big], New Quests
