@@ -2021,7 +2021,7 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Fog of War.
+#HomeWork: Fog of War, chests, 
 
 
 #Extra Homework: Try to find emoji's[All emojis are too big], New Quests

@@ -184,4 +184,6 @@ class UniqueRooms():
     #---------------------------------------------------------------------------------------------------------------------------------------
 
 
-    ROOMS = [ROOM_ONE, ROOM_TWO, ROOM_THREE, ROOM_FOUR, ROOM_FIVE, ROOM_SIX, ROOM_MERCHANT, ROOM_MYSTERYMAN]
+    ROOMS = [ROOM_ONE, ROOM_TWO, ROOM_THREE, ROOM_FOUR, ROOM_FIVE, ROOM_SIX]
+
+    #, ROOM_MERCHANT, ROOM_MYSTERYMAN

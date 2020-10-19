@@ -89,6 +89,7 @@ class LevelGenerator():
         lastDirection = 0
         numberOfRooms = 0
         numberOfMainRooms = 0
+        lastMainRoomIndex = 0
         mainRoomCap = random.randint(minMainRooms, maxMainRooms)
         while numberOfMainRooms < mainRoomCap:
             directionsToGo = random.randint(1,2)
@@ -109,43 +110,44 @@ class LevelGenerator():
                         if d == 1:
                             room.position.y -= (room.height + corridorLength)
                         elif d == 2:
-                            room.position.x += self.rooms[len(self.rooms) - 1].width + corridorLength
+                            room.position.x += self.rooms[lastMainRoomIndex].width + corridorLength
                         elif d == 3:
-                            room.position.y += self.rooms[len(self.rooms) - 1].height + corridorLength
+                            room.position.y += self.rooms[lastMainRoomIndex].height + corridorLength
                     if lastDirection != 0:
                         holeX = 0
                         holeY = 0
                         if lastDirection == 1:
-                            holeX = math.ceil(room.width / 2)
+                            holeX = math.floor(room.width / 2)
                             holeY = room.height - 1
                         elif lastDirection == 2:
                             holeX = 0
-                            holeY = math.ceil(room.height / 2)
+                            holeY = math.floor(room.height / 2)
                         elif lastDirection == 3:  
-                            holeX = math.ceil(room.width / 2)
+                            holeX = math.floor(room.width / 2)
                             holeY = 0
                         room.data[holeY][holeX] = " "
                     if d == direction:
                         holeX = 0
                         holeY = 0
                         if d == 1:
-                            holeX = math.ceil(room.width / 2)
+                            holeX = math.floor(room.width / 2)
                             holeY = 0
                         elif d == 2:
                             holeX = room.width - 1
-                            holeY = math.ceil(room.height / 2)
+                            holeY = math.floor(room.height / 2)
                         elif d == 3:  
-                            holeX = math.ceil(room.width / 2)
+                            holeX = math.floor(room.width / 2)
                             holeY = room.height - 1
                         room.data[holeY][holeX] = " "
                     if numberOfRooms < roomCap or d == direction:
                         numberOfRooms += 1
                         self.rooms.append(room)
-                    if d == direction:
-                        lastX = room.position.x
-                        lastY = room.position.y
-                        lastDirection = d
-                        numberOfMainRooms += 1
+                        if d == direction:
+                            lastX = room.position.x
+                            lastY = room.position.y
+                            lastDirection = d
+                            numberOfMainRooms += 1
+                            lastMainRoomIndex = len(self.rooms) - 1
 
     def BuildMapFromRoomData(self) -> list(list()):
         
@@ -183,7 +185,7 @@ class LevelGenerator():
 
             
 
-#player can spawn in any of the main rooms, not just top right.
+    #player can spawn in any of the main rooms, not just top right.
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def _bounceRooms(self, bounceAmount:int):
