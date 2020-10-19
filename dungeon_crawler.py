@@ -210,6 +210,7 @@ class GameManager():
             self.spawnWeapon()
             self.spawnArmor()
             self.spawnChest()
+            self.spawnArtifact()
         else:
             self.spawnNPCItems()
 
@@ -372,6 +373,23 @@ class GameManager():
                     chest = Chest(XPosition, YPosition, self.itemID)
                     self.items.append(chest)
                     chestSpawn -= 1
+
+    def spawnArtifact(self):
+        numberOfArtifact = random.randint(0,1)
+        while numberOfArtifact > 0:
+            XPosition = random.randint(0, len(self.map[0]) -1)
+            YPosition = random.randint(0, len(self.map) -1)
+            if self.map[YPosition][XPosition] == " ":
+                foundArtifact = False
+                for i in range(len(self.items)):
+                    if self.items[i].position.x == XPosition and self.items[i].position.y == YPosition:
+                        foundArtifact = True
+                if foundArtifact == False:
+                    artifact = Artifact(XPosition, YPosition, 0, "DEFAULT")
+                    artifact = artifact.determineArtifactType()
+                    self.itemID += 1
+                    self.items.append(artifact)
+                    numberOfArtifact -= 1
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1800,14 +1818,39 @@ class Artifact():
         self.ID = id_
         self.isDead = False
         self.type = itemType
-
-
         self.extraHealth = 0
         self.extraDamage = 0
         self.extraArmorNegation = 0
         self.higherCritChance = 0 / 100
         self.higherCritDamage = 0
         self.higherEvasionChance = 0
+
+    def determineArtifactType(self):
+        self.artifactType = random.randint(1, 6)
+        if self.artifactType == 1:
+            healingArtifact = HealingArtifact(self.position.x, self.position.y, self.ID)
+            healingArtifact.determineExtraHealthArtifact()
+            return healingArtifact
+        elif self.artifactType == 2:
+            damageArtifact = DamageArtifact(self.position.x, self.position.y, self.ID)
+            damageArtifact.determineExtraDamageArtifact()
+            return healingArtifact
+        elif self.artifactType == 3:
+            armorNegationArtifact = ArmorNegationArtifact(self.position.x, self.position.y, self.ID)
+            armorNegationArtifact.determineArmorNegationArtifact()
+            return healingArtifact
+        elif self.artifactType == 4:
+            critChanceArtifact = CritChanceArtifact(self.position.x, self.position.y, self.ID)
+            critChanceArtifact.determinecritChanceArtifact()
+            return healingArtifact
+        elif self.artifactType == 5:
+            critDamageArtifact = CritDamageArtifact(self.position.x, self.position.y, self.ID)
+            critDamageArtifact.determineCritDamageArtifact()
+            return healingArtifact
+        elif self.artifactType == 6:
+            evasionArtifact = EvasionArtifact(self.position.x, self.position.y, self.ID)
+            evasionArtifact.determineEvasionArtifact()
+            return healingArtifact
 
 class HealingArtifact(Artifact):
 
@@ -2027,7 +2070,7 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Fog of War.
+#HomeWork: Fog of War, finish artifacts, find vending machine broken icon.
 
 
 #Extra Homework: Try to find emoji's[All emojis are too big], New Quests

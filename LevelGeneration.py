@@ -183,7 +183,7 @@ class LevelGenerator():
 
             
 
-#player can spawn in any of the main rooms, not just top right.
+    #player can spawn in any of the main rooms, not just top right.
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def _bounceRooms(self, bounceAmount:int):
