@@ -1179,7 +1179,7 @@ class MoronEnemy(BaseEnemy):
     def __init__(self, x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP):
     
         super().__init__(x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP)
-        self.displayCharacter = Text_Attributes.GREEN + "z" + Text_Attributes.END
+        self.displayCharacter = Text_Attributes.GREEN + "🧟" + Text_Attributes.END
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1190,7 +1190,7 @@ class TankEnemy(BaseEnemy):
     def __init__(self, x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP):
     
         super().__init__(x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP)
-        self.displayCharacter = Text_Attributes.RED + "d" + Text_Attributes.END
+        self.displayCharacter = Text_Attributes.RED + "🐉" + Text_Attributes.END
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1212,7 +1212,7 @@ class SpeedyEnemy(BaseEnemy):
     def __init__(self, x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP):
     
         super().__init__(x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP)
-        self.displayCharacter = Text_Attributes.BLACK + "s" + Text_Attributes.END  
+        self.displayCharacter = Text_Attributes.BLACK + "🕷" + Text_Attributes.END  
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1420,7 +1420,7 @@ class Key(Item):
     def __init__(self, x, y, id_):
         self.name = 0
         super().__init__(x, y, id_, "key")
-        self.displayCharacter = "1"
+        self.displayCharacter = "🔑"
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1449,7 +1449,7 @@ class Bomb(Item):
     def __init__(self, x, y, id_):
         self.name = 0
         super().__init__(x, y, id_, "bomb")
-        self.displayCharacter = "0"
+        self.displayCharacter = "💣"
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2073,4 +2073,4 @@ Now you must fight through the hordes of Kargons to reach their leader. You need
 #HomeWork: Fog of War, finish artifacts, find vending machine broken icon.
 
 
-#Extra Homework: Try to find emoji's[All emojis are too big], New Quests
+#Extra Homework: New Quests
