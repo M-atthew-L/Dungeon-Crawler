@@ -375,7 +375,9 @@ class GameManager():
                     chestSpawn -= 1
 
     def spawnArtifact(self):
-        numberOfArtifact = random.randint(0,1)
+        spawnArtifact = random.randint(1,1)
+        if spawnArtifact == 1:
+            numberOfArtifact = 1
         while numberOfArtifact > 0:
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
@@ -1821,7 +1823,7 @@ class Artifact():
         self.extraHealth = 0
         self.extraDamage = 0
         self.extraArmorNegation = 0
-        self.higherCritChance = 0 / 100
+        self.higherCritChance = 0
         self.higherCritDamage = 0
         self.higherEvasionChance = 0
 
@@ -1836,20 +1838,20 @@ class Artifact():
             damageArtifact.determineExtraDamageArtifact()
             return healingArtifact
         elif self.artifactType == 3:
-            armorNegationArtifact = ArmorNegationArtifact(self.position.x, self.position.y, self.ID)
-            armorNegationArtifact.determineArmorNegationArtifact()
+            armorNegationArtifact = ArmorArtifact(self.position.x, self.position.y, self.ID)
+            armorNegationArtifact.determineExtraArmorArtifact()
             return healingArtifact
         elif self.artifactType == 4:
             critChanceArtifact = CritChanceArtifact(self.position.x, self.position.y, self.ID)
-            critChanceArtifact.determinecritChanceArtifact()
+            critChanceArtifact.determineHigherCritChanceArtifact()
             return healingArtifact
         elif self.artifactType == 5:
             critDamageArtifact = CritDamageArtifact(self.position.x, self.position.y, self.ID)
-            critDamageArtifact.determineCritDamageArtifact()
+            critDamageArtifact.determineHigherCritDamageArtifact()
             return healingArtifact
         elif self.artifactType == 6:
             evasionArtifact = EvasionArtifact(self.position.x, self.position.y, self.ID)
-            evasionArtifact.determineEvasionArtifact()
+            evasionArtifact.determineHigherEvasionChanceArtifact()
             return healingArtifact
 
 class HealingArtifact(Artifact):
@@ -1880,7 +1882,7 @@ class DamageArtifact(Artifact):
         super().__init__(x, y, id_, "damage artifact")
         self.displayCharacter = "2"
 
-    def extraDamageArtifact(self):
+    def determineExtraDamageArtifact(self):
         if self.damageArtifactValue >= 1 and self.damageArtifactValue <= 3:
             self.name = "Sharpness"
         elif self.damageArtifactValue >= 4 and self.damageArtifactValue <= 6:
@@ -1890,18 +1892,18 @@ class DamageArtifact(Artifact):
         elif self.damageArtifactValue >= 9 and self.damageArtifactValue <= 10:
             self.name = "Sad backstory"
 
-class ArmorNegationArtifact(Artifact):
+class ArmorArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.armorNegationArtifactValue = random.randint(1 / 100, 10 / 100)
+        self.armorArtifactValue = random.randint(1 / 100, 10 / 100)
         self.name = 0
-        super().__init__(x, y, id_, "armor negation artifact")
+        super().__init__(x, y, id_, "armor artifact")
         self.displayCharacter = "3"
 
-    def extraArmorNegationArtifact(self):
-        if self.armorNegationArtifactValue >= 1 / 100 and self.armorNegationArtifactValue <= 5 / 100:
+    def determineExtraArmorArtifact(self):
+        if self.armorArtifactValue >= 1 / 100 and self.armornArtifactValue <= 5 / 100:
             self.name = "Plot Armor"
-        elif self.armorNegationArtifactValue >= 6 / 100 and self.armorNegationArtifactValue <= 10 / 100:
+        elif self.armorArtifactValue >= 6 / 100 and self.armorArtifactValue <= 10 / 100:
             self.name = "Battle Scars"
 
 class CritChanceArtifact(Artifact):
@@ -1912,7 +1914,7 @@ class CritChanceArtifact(Artifact):
         super().__init__(x, y, id_, "crit chance artifact")
         self.displayCharacter = "4"
 
-    def higherCritChanceArtifact(self):
+    def determineHigherCritChanceArtifact(self):
         if self.critChanceArtifactValue >= 1 / 100 and self.critChanceArtifactValue <= 5 / 100:
             self.name = "Training Dummy"
         elif self.critChanceArtifactValue >= 6 / 100 and self.critChanceArtifactValue <= 10 / 100:
@@ -1926,7 +1928,7 @@ class CritDamageArtifact(Artifact):
         super().__init__(x, y, id_, "crit damage artifact")
         self.displayCharacter = "5"
 
-    def higherCritDamageArtifact(self):
+    def determineHigherCritDamageArtifact(self):
         if self.critDamageArtifactValue >= 1 / 100 and self.critDamageArtifactValue <= 5 / 100:
             self.name = "Brass Knuckles"
         elif self.critDamageArtifactValue >= 6 / 100 and self.critDamageArtifactValue <= 10 / 100:
@@ -1940,7 +1942,7 @@ class EvasionArtifact(Artifact):
         super().__init__(x, y, id_, "evasion artifact")
         self.displayCharacter = "6"
 
-    def higherEvasionChanceArtifact(self):
+    def determineHigherEvasionChanceArtifact(self):
         if self.evasionChanceArtifactValue >= 1 / 100 and self.evasionChanceArtifactValue <= 5 / 100:
             self.name = "Invisibilty Cloak"
         elif self.evasionChanceArtifactValue >= 6 / 100 and self.evasionChanceArtifactValue <= 10 / 100:
