@@ -76,10 +76,10 @@ class GameManager():
         #randomRoom = random.randint(0,len(Maps.UniqueRooms.ROOMS)-1)
         self.map = self.convertMapData(Maps.UniqueRooms.STARTING_ROOM)
         self.levelGenerator = LevelGeneration.LevelGenerator(Maps.UniqueRooms.ROOMS)
-        #self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
-        self.levelGenerator.GenerateLevel(15, 5, 8, 5)
-        self.map = self.levelGenerator.BuildMapFromRoomData()
-        #self.map = self.levelGenerator.rooms[0].data
+        self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
+        #self.levelGenerator.GenerateLevel(15, 5, 8, 5)
+        #self.map = self.levelGenerator.BuildMapFromRoomData()
+        self.map = self.levelGenerator.rooms[0].data
         
         self.player = PlayerInfo(input("What is your name? "), 0, 1, 1)
 
@@ -137,6 +137,8 @@ class GameManager():
         print("Current Quest:", self.currentQuest.questName)
         print("Inventory:")
         self.player.inventory.display()
+        print("Artifacts:")
+        print(self.player.artifactPrettyfication())
         print()
         print("Recent Events:")
         for mssg in self.player.messageLog:
@@ -193,7 +195,6 @@ class GameManager():
             self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
             self.map = self.levelGenerator.rooms[0].data
         self.initMap()
-        
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -453,6 +454,127 @@ class GameManager():
                             bomb.price = random.randint(35, 50)
                         self.itemID += 1
                         self.items.append(bomb)
+                if self.map[y][x] == "é":
+                    item = random.randint(1,5)
+                    if item == 1:
+                        healing = Healing(x, y, self.itemID)
+                        if setPrice == True:
+                            healing.determineHealing(random.randint(35,40), random.randint(3,5))
+                        else:
+                            healing.determineHealing(0, random.randint(3,5))
+                        self.itemID += 1
+                        self.items.append(healing)
+                    if item == 2:
+                        weapon = Weapon(x, y, self.itemID)
+                        if setPrice == True:
+                            weapon.determineWeapon(random.randint(50,60), 1)
+                        else:
+                            weapon.determineWeapon(1)
+                        self.itemID += 1
+                        self.items.append(weapon)
+                    if item == 3:
+                        armor = Armor(x, y, self.itemID)
+                        if setPrice == True:
+                            armor.determineArmor(random.randint(70,80), random.randint(3,5))
+                        else:
+                            armor.determineArmor(3,5)
+                        self.itemID += 1
+                        self.items.append(armor)
+                    if item == 4:
+                        key = Key(x, y, self.itemID)
+                        if setPrice == True:
+                            key.price = random.randint(40, 50)
+                        self.itemID += 1
+                        self.items.append(key)
+                    if item == 5:
+                        bomb = Bomb(x, y, self.itemID)
+                        if setPrice == True:
+                            bomb.price = random.randint(35, 50)
+                        self.itemID += 1
+                        self.items.append(bomb)
+                    self.map[y][x] = " "
+                if self.map[y][x] == "ê":
+                    item = random.randint(1,5)
+                    if item == 1:
+                        healing = Healing(x, y, self.itemID)
+                        if setPrice == True:
+                            healing.determineHealing(random.randint(35,40), random.randint(6,15))
+                        else:
+                            healing.determineHealing(0, random.randint(6,15))
+                        self.itemID += 1
+                        self.items.append(healing)
+                    if item == 2:
+                        weapon = Weapon(x, y, self.itemID)
+                        if setPrice == True:
+                            weapon.determineWeapon(random.randint(50,60), random.randint(2,3))
+                        else:
+                            weapon.determineWeapon(random.randint(2,3))
+                        self.itemID += 1
+                        self.items.append(weapon)
+                    if item == 3:
+                        armor = Armor(x, y, self.itemID)
+                        if setPrice == True:
+                            armor.determineArmor(random.randint(70,80), random.randint(6,15))
+                        else:
+                            armor.determineArmor(6,15)
+                        self.itemID += 1
+                        self.items.append(armor)
+                    if item == 4:
+                        key = Key(x, y, self.itemID)
+                        if setPrice == True:
+                            key.price = random.randint(40, 50)
+                        self.itemID += 1
+                        self.items.append(key)
+                    if item == 5:
+                        bomb = Bomb(x, y, self.itemID)
+                        if setPrice == True:
+                            bomb.price = random.randint(35, 50)
+                            self.itemID += 1
+                            self.items.append(bomb)
+                        else:
+                            weapon.determineWeapon(1)
+                        self.itemID += 1
+                        self.items.append(weapon)
+                    self.map[y][x] = " "
+                if self.map[y][x] == "ë":
+                    item = random.randint(1,5)
+                    if item == 1:
+                        healing = Healing(x, y, self.itemID)
+                        if setPrice == True:
+                            healing.determineHealing(random.randint(35,40), random.randint(16,20))
+                        else:
+                            healing.determineHealing(0, random.randint(16,20))
+                        self.itemID += 1
+                        self.items.append(healing)
+                    if item == 2:
+                        weapon = Weapon(x, y, self.itemID)
+                        if setPrice == True:
+                            weapon.determineWeapon(random.randint(50,60), 4)
+                        else:
+                            weapon.determineWeapon(4)
+                        self.itemID += 1
+                        self.items.append(weapon)
+                    if item == 3:
+                        armor = Armor(x, y, self.itemID)
+                        if setPrice == True:
+                            armor.determineArmor(random.randint(70,80), random.randint(16,25))
+                        else:
+                            armor.determineArmor(16,25)
+                        self.itemID += 1
+                        self.items.append(armor)
+                    if item == 4:
+                        key = Key(x, y, self.itemID)
+                        if setPrice == True:
+                            key.price = random.randint(40, 50)
+                        self.itemID += 1
+                        self.items.append(key)
+                    if item == 5:
+                        bomb = Bomb(x, y, self.itemID)
+                        if setPrice == True:
+                            bomb.price = random.randint(35, 50)
+                        self.itemID += 1
+                        self.items.append(bomb)
+                    self.map[y][x] = " "
 
     #---------------------------------------------------------------------------------------------------------------------------------------
  
@@ -715,13 +837,14 @@ class PlayerInfo():
         self.playerClass = playerClass
         self.position = Vec2(x,y)
         self.baseHealth = 100
-        self.baseMaxHealth = 100
+        self.baseMaxHealth = 100 
         self.baseDamage = 5
-        self.baseDefenseNegation = 1 / 100
+        self.baseArmor = 1 / 100
         self.baseEvasionChance = 10 / 100
         self.baseCritChance = 5 / 100
         self.baseCritDamage = 1.5
         self.baseSpeed = 100 / 100
+        self.baseVision = 3
         self.isDead = False
 
         self.coinBag = 0
@@ -739,6 +862,7 @@ class PlayerInfo():
         self.inventory = Inventory()
         self.keyInventory = 0
         self.bombInventory = 0
+        self.artifactInventory = {}
 
         self.currentLevel = 0
 
@@ -849,13 +973,36 @@ class PlayerInfo():
                                     canPickup = False
                                     self.addMessage(Text_Attributes.BOLD + "There are still monsters in the room" + Text_Attributes.END)
                             if canPickup:
-                                if items[i].pickup(self) == 1:
+                                pickItemsUp = items[i].pickup(self)
+                                if pickItemsUp == 1:
                                     '''
                                     coins = random.randint(1,2)
                                     player.coinBag
                                     '''
                                     map[moveY][moveX] = "!"
                                     return "item"
+                                if pickItemsUp == 2:
+                                    '''
+                                    coins = random.randint(1,2)
+                                    player.coinBag
+                                    '''
+                                    map[moveY][moveX] = "é"
+                                    return "item"
+                                if pickItemsUp == 3:
+                                    '''
+                                    coins = random.randint(1,2)
+                                    player.coinBag
+                                    '''
+                                    map[moveY][moveX] = "ê"
+                                    return "item"
+                                if pickItemsUp == 4:
+                                    '''
+                                    coins = random.randint(1,2)
+                                    player.coinBag
+                                    '''
+                                    map[moveY][moveX] = "ë"
+                                    return "item"
+                                
                             break
                     self.position.x = moveX
                     self.position.y = moveY
@@ -915,15 +1062,15 @@ class PlayerInfo():
                 self.addMessage(Merchant.sayDialogue())
             elif map[moveY][moveX] == "?":
                 if MysteryMan.sayDialogue(self) == 'item':
-                    map[moveY][moveX] = '!'
+                    map[moveY][moveX] = "!"
                     return 'mysteryman'
                 else:
-                    map[moveY][moveX] = ' '
+                    map[moveY][moveX] = " "
             elif map[moveY][moveX] == "!":
                 for item in items:
                     if item.position.x == moveX and item.position.y == moveY:
                         item.pickup(self)
-                        map[moveY][moveX] = ' '
+                        map[moveY][moveX] = " "
             elif map[moveY][moveX] == "A":
                 depositGold = input("Would you like to deposit your gold? ").lower()
                 if depositGold == "yes":
@@ -987,7 +1134,7 @@ class PlayerInfo():
             finalDamage = round(finalDamage)
             for item in self.inventory.armorSlot:
                 if item.type == "armor":
-                    finalDamage *= item.armorNegation / 100
+                    finalDamage *= item.armorValue / 100
                     armorBreaks = random.randint(1, 10)
                     if armorBreaks == 1:
                         self.inventory.armorSlot.remove(item)
@@ -1061,6 +1208,14 @@ class PlayerInfo():
             if easyQuest == 1:
                 self.addMessage("Objective: ", easyQuestType)
         pass
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+
+    def artifactPrettyfication(self):
+        prettyString = ""
+        for artifact in self.artifactInventory.values():
+            prettyString = prettyString + f"[{artifact[0][0]}]" 
+        return prettyString
 
 
 class BaseEnemy():
@@ -1181,7 +1336,7 @@ class MoronEnemy(BaseEnemy):
     def __init__(self, x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP):
     
         super().__init__(x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP)
-        self.displayCharacter = Text_Attributes.GREEN + "🧟" + Text_Attributes.END
+        self.displayCharacter = Text_Attributes.GREEN + "z" + Text_Attributes.END
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1192,7 +1347,7 @@ class TankEnemy(BaseEnemy):
     def __init__(self, x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP):
     
         super().__init__(x, y, name, enemyHealth, enemyArmorDefense, enemyDamage, enemyVision, enemySpeed, enemyGold, enemyXP)
-        self.displayCharacter = Text_Attributes.RED + "🐉" + Text_Attributes.END
+        self.displayCharacter = Text_Attributes.RED + "d" + Text_Attributes.END
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1251,7 +1406,10 @@ class Coin(Item):
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
-    def determineCoin(self):
+    def determineCoin(self, betterCoinItem = 0):
+        self.coinValue += betterCoinItem
+        if self.coinValue > 20:
+            self.coinValue = 20
         if self.coinValue >= 1 and self.coinValue <=5:
             self.name = "a Coin"
         elif self.coinValue >= 6 and self.coinValue <= 10:
@@ -1282,7 +1440,10 @@ class Healing(Item):
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
-    def determineHealing(self, p = 0):
+    def determineHealing(self, p = 0, betterHealingItem = 0):
+        self.healingValue += betterHealingItem
+        if self.healingValue > 80:
+            self.healingValue = 80
         if self.healingValue >= 5 and self.healingValue <= 15:
             self.name = "Kabob"
         elif self.healingValue >= 16 and self.healingValue <= 30:
@@ -1335,7 +1496,10 @@ class Weapon(Item):
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
-    def determineWeapon(self, p = 0):
+    def determineWeapon(self, p = 0, betterDamageItem = 0):
+        self.damageValue += betterDamageItem
+        if self.damageValue > 7:
+            self.damageValue = 7
         if self.damageValue >= 1 and self.damageValue <= 2:
             self.name = "Stick"
         elif self.damageValue >= 3 and self.damageValue <= 4:
@@ -1373,25 +1537,28 @@ class Armor(Item):
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     def __init__(self, x, y, id_):
-        self.armorNegation = random.randint(45, 99)
+        self.armorValue = random.randint(45, 99)
         self.name = 0
         super().__init__(x, y, id_, "armor")
         self.displayCharacter = "🛡️"
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
-    def determineArmor(self, p = 0):
-        if self.armorNegation >= 81 and self.armorNegation <= 99:
+    def determineArmor(self, p = 0, betterArmorItem = 0):
+        self.armorValue -= betterArmorItem
+        if self.armorValue < 45:
+            self.armorValue = 45
+        if self.armorValue >= 81 and self.armorValue <= 99:
             self.name = "Leather Armor"
-        elif self.armorNegation >= 66 and self.armorNegation <= 80:
+        elif self.armorValue >= 66 and self.armorValue <= 80:
             self.name = "Chainmail"
-        elif self.armorNegation >= 55 and self.armorNegation <= 65:
+        elif self.armorValue >= 55 and self.armorValue <= 65:
             self.name = "Iron Armor"
-        elif self.armorNegation >= 50 and self.armorNegation <= 54:
+        elif self.armorValue >= 50 and self.armorValue <= 54:
             self.name = "Iron Armor"
-        elif self.armorNegation >= 46 and self.armorNegation <= 49:
+        elif self.armorValue >= 46 and self.armorValue <= 49:
             self.name = "Diamond Armor"
-        elif self.armorNegation >= 45:
+        elif self.armorValue >= 45:
             self.name = "Netherite Armor"
         self.price = p
 
@@ -1422,7 +1589,7 @@ class Key(Item):
     def __init__(self, x, y, id_):
         self.name = 0
         super().__init__(x, y, id_, "key")
-        self.displayCharacter = "🔑"
+        self.displayCharacter = "I"
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1451,7 +1618,7 @@ class Bomb(Item):
     def __init__(self, x, y, id_):
         self.name = 0
         super().__init__(x, y, id_, "bomb")
-        self.displayCharacter = "💣"
+        self.displayCharacter = "0"
 
     #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1820,6 +1987,7 @@ class Artifact():
         self.ID = id_
         self.isDead = False
         self.type = itemType
+        self.price = price
         self.extraHealth = 0
         self.extraDamage = 0
         self.extraArmorNegation = 0
@@ -1836,43 +2004,62 @@ class Artifact():
         elif self.artifactType == 2:
             damageArtifact = DamageArtifact(self.position.x, self.position.y, self.ID)
             damageArtifact.determineExtraDamageArtifact()
-            return healingArtifact
+            return damageArtifact
         elif self.artifactType == 3:
-            armorNegationArtifact = ArmorArtifact(self.position.x, self.position.y, self.ID)
-            armorNegationArtifact.determineExtraArmorArtifact()
-            return healingArtifact
+            armorArtifact = ArmorArtifact(self.position.x, self.position.y, self.ID)
+            armorArtifact.determineExtraArmorArtifact()
+            return armorArtifact
         elif self.artifactType == 4:
             critChanceArtifact = CritChanceArtifact(self.position.x, self.position.y, self.ID)
             critChanceArtifact.determineHigherCritChanceArtifact()
-            return healingArtifact
+            return critChanceArtifact
         elif self.artifactType == 5:
             critDamageArtifact = CritDamageArtifact(self.position.x, self.position.y, self.ID)
             critDamageArtifact.determineHigherCritDamageArtifact()
-            return healingArtifact
+            return critDamageArtifact
         elif self.artifactType == 6:
             evasionArtifact = EvasionArtifact(self.position.x, self.position.y, self.ID)
             evasionArtifact.determineHigherEvasionChanceArtifact()
-            return healingArtifact
+            return evasionArtifact
 
 class HealingArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.healthArtifactValue = random.randint(1,25)
+        self.healingArtifactValue = random.randint(1,25)
         self.name = 0
         super().__init__(x, y, id_, "healing artifact")
         self.displayCharacter = "1"
         
     def determineExtraHealthArtifact(self):
-        if self.healthArtifactValue >= 1 and self.healthArtifactValue <= 5:
+        if self.healingArtifactValue >= 1 and self.healingArtifactValue <= 5:
             self.name = "Mineral Water"
-        elif self.healthArtifactValue >= 6 and self.healthArtifactValue <= 10:
+        elif self.healingArtifactValue >= 6 and self.healingArtifactValue <= 10:
             self.name = "Health Elixir"
-        elif self.healthArtifactValue >= 11 and self.healthArtifactValue <= 15:
+        elif self.healingArtifactValue >= 11 and self.healingArtifactValue <= 15:
             self.name = "Golden Carrot"
-        elif self.healthArtifactValue >= 16 and self.healthArtifactValue <= 20:
+        elif self.healingArtifactValue >= 16 and self.healingArtifactValue <= 20:
             self.name = "Maxim Tomato"
-        elif self.healthArtifactValue >= 21 and self.healthArtifactValue <= 25:
+        elif self.healingArtifactValue >= 21 and self.healingArtifactValue <= 25:
             self.name = "Heart Container"
+
+    def pickup(self, player):
+        canPickup = True
+        if self.price > 0:
+            canPickup = False
+            if player.coinBag > self.price:
+                buyItem = input("Would you like to buy this item for " + str(self.price) + " coins? ").lower()
+                if buyItem == 'yes':
+                    player.coinBag -= self.price
+                    canPickup = True
+            else:
+                player.addMessage("You do not have enough money to do that.")
+        if canPickup == True:
+            self.isDead = True
+            player.artifactInventory.setdefault(self.type, [])
+            player.artifactInventory[self.type].append((self.name, self.healingArtifactValue))
+            player.addMessage(player.name, "picked up an artifact")
+            player.baseMaxHealth += self.healingArtifactValue
+            player.baseHealth += self.healingArtifactValue
 
 class DamageArtifact(Artifact):
 
@@ -1892,61 +2079,155 @@ class DamageArtifact(Artifact):
         elif self.damageArtifactValue >= 9 and self.damageArtifactValue <= 10:
             self.name = "Sad backstory"
 
+    def pickup(self, player):
+        canPickup = True
+        if self.price > 0:
+            canPickup = False
+            if player.coinBag > self.price:
+                buyItem = input("Would you like to buy this item for " + str(self.price) + " coins? ").lower()
+                if buyItem == 'yes':
+                    player.coinBag -= self.price
+                    canPickup = True
+            else:
+                player.addMessage("You do not have enough money to do that.")
+        if canPickup == True:
+            self.isDead = True
+            player.artifactInventory.setdefault(self.type, [])
+            player.artifactInventory[self.type].append((self.name, self.damageArtifactValue))
+            player.addMessage(player.name, "picked up an artifact")
+            player.baseDamage += self.damageArtifactValue
+
 class ArmorArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.armorArtifactValue = random.randint(1 / 100, 10 / 100)
+        self.armorArtifactValue = random.randint(1, 10)
         self.name = 0
         super().__init__(x, y, id_, "armor artifact")
         self.displayCharacter = "3"
 
     def determineExtraArmorArtifact(self):
-        if self.armorArtifactValue >= 1 / 100 and self.armornArtifactValue <= 5 / 100:
+        self.armorArtifactValue /= 100
+        if self.armorArtifactValue >= 1 / 100 and self.armorArtifactValue <= 5 / 100:
             self.name = "Plot Armor"
         elif self.armorArtifactValue >= 6 / 100 and self.armorArtifactValue <= 10 / 100:
             self.name = "Battle Scars"
 
+    def pickup(self, player):
+        canPickup = True
+        if self.price > 0:
+            canPickup = False
+            if player.coinBag > self.price:
+                buyItem = input("Would you like to buy this item for " + str(self.price) + " coins? ").lower()
+                if buyItem == 'yes':
+                    player.coinBag -= self.price
+                    canPickup = True
+            else:
+                player.addMessage("You do not have enough money to do that.")
+        if canPickup == True:
+            self.isDead = True
+            player.artifactInventory.setdefault(self.type, [])
+            player.artifactInventory[self.type].append((self.name, self.armorArtifactValue))
+            player.addMessage(player.name, "picked up an artifact")
+            player.baseArmor += self.armorArtifactValue
+
 class CritChanceArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.critChanceArtifactValue = random.randint(1 / 100, 10 / 100)
+        self.critChanceArtifactValue = random.randint(1,10)
         self.name = 0
         super().__init__(x, y, id_, "crit chance artifact")
         self.displayCharacter = "4"
 
     def determineHigherCritChanceArtifact(self):
+        self.critChanceArtifactValue /= 100
         if self.critChanceArtifactValue >= 1 / 100 and self.critChanceArtifactValue <= 5 / 100:
             self.name = "Training Dummy"
         elif self.critChanceArtifactValue >= 6 / 100 and self.critChanceArtifactValue <= 10 / 100:
             self.name = "Four Leaf Clover"
+    
+    def pickup(self, player):
+        canPickup = True
+        if self.price > 0:
+            canPickup = False
+            if player.coinBag > self.price:
+                buyItem = input("Would you like to buy this item for " + str(self.price) + " coins? ").lower()
+                if buyItem == 'yes':
+                    player.coinBag -= self.price
+                    canPickup = True
+            else:
+                player.addMessage("You do not have enough money to do that.")
+        if canPickup == True:
+            self.isDead = True
+            player.artifactInventory.setdefault(self.type, [])
+            player.artifactInventory[self.type].append((self.name, self.critChanceArtifactValue))
+            player.addMessage(player.name, "picked up an artifact")
+            player.baseCritChance += self.critChanceArtifactValue
 
 class CritDamageArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.critDamageArtifactValue = random.randint(1 / 100, 10 / 100)
+        self.critDamageArtifactValue = random.randint(1, 10)
         self.name = 0
         super().__init__(x, y, id_, "crit damage artifact")
         self.displayCharacter = "5"
 
     def determineHigherCritDamageArtifact(self):
+        self.critDamageArtifactValue /= 100
         if self.critDamageArtifactValue >= 1 / 100 and self.critDamageArtifactValue <= 5 / 100:
             self.name = "Brass Knuckles"
         elif self.critDamageArtifactValue >= 6 / 100 and self.critDamageArtifactValue <= 10 / 100:
             self.name = "Anger"
 
+    def pickup(self, player):
+        canPickup = True
+        if self.price > 0:
+            canPickup = False
+            if player.coinBag > self.price:
+                buyItem = input("Would you like to buy this item for " + str(self.price) + " coins? ").lower()
+                if buyItem == 'yes':
+                    player.coinBag -= self.price
+                    canPickup = True
+            else:
+                player.addMessage("You do not have enough money to do that.")
+        if canPickup == True:
+            self.isDead = True
+            player.artifactInventory.setdefault(self.type, [])
+            player.artifactInventory[self.type].append((self.name, self.critDamageArtifactValue))
+            player.addMessage(player.name, "picked up an artifact")
+            player.baseCritDamage += self.critDamageArtifactValue
+
 class EvasionArtifact(Artifact):
 
     def __init__(self, x, y, id_):
-        self.evasionChanceArtifactValue = random.randint(1 / 100, 10 / 100)
+        self.evasionChanceArtifactValue = random.randint(1, 10)
         self.name = 0
         super().__init__(x, y, id_, "evasion artifact")
         self.displayCharacter = "6"
 
     def determineHigherEvasionChanceArtifact(self):
+        self.evasionChanceArtifactValue /= 100
         if self.evasionChanceArtifactValue >= 1 / 100 and self.evasionChanceArtifactValue <= 5 / 100:
             self.name = "Invisibilty Cloak"
         elif self.evasionChanceArtifactValue >= 6 / 100 and self.evasionChanceArtifactValue <= 10 / 100:
             self.name = "High ping"
+
+    def pickup(self, player):
+        canPickup = True
+        if self.price > 0:
+            canPickup = False
+            if player.coinBag > self.price:
+                buyItem = input("Would you like to buy this item for " + str(self.price) + " coins? ").lower()
+                if buyItem == 'yes':
+                    player.coinBag -= self.price
+                    canPickup = True
+            else:
+                player.addMessage("You do not have enough money to do that.")
+        if canPickup == True:
+            self.isDead = True
+            player.artifactInventory.setdefault(self.type, [])
+            player.artifactInventory[self.type].append((self.name, self.evasionChanceArtifactValue))
+            player.addMessage(player.name, "picked up an artifact")
+            player.baseEvasionChance += self.evasionChanceArtifactValue
 
 
 class Inventory():
@@ -2072,7 +2353,7 @@ They took everything, including you friends and family. You only escaped by hidi
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Fog of War, finish artifacts, find vending machine broken icon.
+#HomeWork: Fog of War, test chest code, balance items(make npc items worse or better), 
 
 
-#Extra Homework: New Quests
+#Extra Homework: New Quests, find vending machine broken icon.
