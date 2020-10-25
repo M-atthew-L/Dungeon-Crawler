@@ -301,7 +301,7 @@ class GameManager():
                 '''
 
     def spawnHealing(self):
-        numberOfHealing = random.randint(0,1)
+        numberOfHealing = random.randint(1,3)
         for __ in range(numberOfHealing):
             XPosition = random.randint(0, len(self.map[0]) -1)
             YPosition = random.randint(0, len(self.map) -1)
@@ -318,7 +318,7 @@ class GameManager():
                     numberOfHealing -= 1
 
     def spawnWeapon(self):
-        weaponSpawnChance = random.randint(0, 7)
+        weaponSpawnChance = random.randint(1, 7)
         weaponSpawn = 0
         if weaponSpawnChance == 1:
             weaponSpawn = 1
@@ -358,7 +358,7 @@ class GameManager():
                     armorSpawn -= 1
 
     def spawnChest(self):
-        chestSpawnChance = random.randint(1, 3)
+        chestSpawnChance = random.randint(1, 5)
         chestSpawn = 0
         if chestSpawnChance == 1:
             chestSpawn = 1
@@ -376,7 +376,7 @@ class GameManager():
                     chestSpawn -= 1
 
     def spawnArtifact(self):
-        spawnArtifact = random.randint(1,1)
+        spawnArtifact = random.randint(0,10)
         if spawnArtifact == 1:
             numberOfArtifact = 1
         while numberOfArtifact > 0:
@@ -1130,7 +1130,7 @@ class PlayerInfo():
         if evasionChance <= self.baseEvasionChance:
             finalDamage = 0
         else:
-            finalDamage = damage * (1 - self.baseDefenseNegation)
+            finalDamage = damage * (1 - self.baseArmor)
             finalDamage = round(finalDamage)
             for item in self.inventory.armorSlot:
                 if item.type == "armor":
@@ -1169,7 +1169,7 @@ class PlayerInfo():
         self.baseMaxHealth += 1
         self.baseHealth = self.baseMaxHealth
         self.baseDamage += 0.5
-        self.baseDefenseNegation += 1 / 100
+        self.baseArmor += 1 / 100
         self.baseEvasionChance += 1 / 100
         self.baseCritChance += 1/ 100
 
@@ -2070,13 +2070,13 @@ class DamageArtifact(Artifact):
         self.displayCharacter = "2"
 
     def determineExtraDamageArtifact(self):
-        if self.damageArtifactValue >= 1 and self.damageArtifactValue <= 3:
+        if self.damageArtifactValue >= 1 and self.damageArtifactValue <= 2:
             self.name = "Sharpness"
-        elif self.damageArtifactValue >= 4 and self.damageArtifactValue <= 6:
+        elif self.damageArtifactValue >= 3 and self.damageArtifactValue <= 4:
             self.name = "Whet Stone"
-        elif self.damageArtifactValue >= 7 and self.damageArtifactValue <= 8:
+        elif self.damageArtifactValue >= 5 and self.damageArtifactValue <= 6:
             self.name = "Dramatic Music"
-        elif self.damageArtifactValue >= 9 and self.damageArtifactValue <= 10:
+        elif self.damageArtifactValue >= 7 and self.damageArtifactValue <= 8:
             self.name = "Sad backstory"
 
     def pickup(self, player):
@@ -2348,8 +2348,8 @@ if __name__ == "__main__":
 
 ''' Storyline: You used to live in a quiet, peaceful village in the middle of a forest, hidden from the world. At least, you THOUGHT you were hidden.
 But on a quiet Saturday, your village began to shake. What you thought was an earthquake turned out to be the hooves of hundreds of horses.
-You people tried to reason with the riders of the horses, the Kargons, but they wouldn't listen. They attacked, pillaging the village and plundering each house they passes.
-They took everything, including you friends and family. You only escaped by hiding you secret bunker. 
+Your people tried to reason with the riders of the horses, the Kargons, but they wouldn't listen. They attacked, pillaging the village and plundering each house they passed.
+They took everything, including your friends and family. You only escaped by hiding in your secret bunker. 
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 

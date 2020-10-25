@@ -34,8 +34,7 @@ class FogofWar():
             counter = 1
             for y in range(vision):
                 for x in range(counter):
-                    character = map    
-
+                    character = map
         if octant == 2:
         if octant == 3:
         if octant == 4:
