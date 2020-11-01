@@ -15,6 +15,7 @@ import Maps
 import LevelGeneration
 from Utilities import Vec2, Rectangle
 from Camera import Camera
+import FogofWar
 
 #https://pypi.org/project/getch/
 
@@ -103,28 +104,34 @@ class GameManager():
 
     def displayMap(self):
         #this prints the map after you or an enemy moves
+        visibleTiles = FogofWar.FogofWar.determine_vision(self.player.baseVision, (self.player.position.x, self.player.position.y), self.map)
         for y in range(len(self.map)):
             constructedLine = ""
             for x in range(len(self.map[y])):
                 if self.player.position.x == x and self.player.position.y == y:
                     constructedLine += self.player.displayCharacter
                 else: 
-                    foundEnemy = False
-                    foundItem = False
-                    for i in range(len(self.enemies)):
-                        if x == self.enemies[i].position.x and y == self.enemies[i].position.y:
-                            constructedLine += self.enemies[i].displayCharacter
-                            foundEnemy = True
+                    for tile in visibleTiles:
+                        if tile[0] == x and tile[1] == y:
+                            foundEnemy = False
+                            foundItem = False
+                            for i in range(len(self.enemies)):
+                                if x == self.enemies[i].position.x and y == self.enemies[i].position.y:
+                                    constructedLine += self.enemies[i].displayCharacter
+                                    foundEnemy = True
+                                    break
+                            if foundEnemy == False:
+                                
+                                for i in range(len(self.items)):
+                                    if x == self.items[i].position.x and y == self.items[i].position.y:
+                                        constructedLine += self.items[i].displayCharacter
+                                        foundItem = True
+                                        break
+                            if foundItem == False and foundEnemy == False:
+                                constructedLine += self.map[y][x]
                             break
-                    if foundEnemy == False:
-                        
-                        for i in range(len(self.items)):
-                            if x == self.items[i].position.x and y == self.items[i].position.y:
-                                constructedLine += self.items[i].displayCharacter
-                                foundItem = True
-                                break
-                    if foundItem == False and foundEnemy == False:
-                        constructedLine += self.map[y][x]
+                        else:
+                            constructedLine += " "
             print(constructedLine)
 
     def displayUI(self):
@@ -2354,7 +2361,7 @@ They took everything, including your friends and family. You only escaped by hid
 Now you must fight through the hordes of Kargons to reach their leader. You need to defeat their leader and free your people to restore peace to your village. '''
 
 
-#HomeWork: Fog of War, test chest code, balance items(make npc items worse or better), 
+#HomeWork: Read Article, do practice problems.
 
 
 #Extra Homework: New Quests, find vending machine broken icon.

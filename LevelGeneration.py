@@ -2,6 +2,7 @@ import math
 import random
 from Camera import Camera
 from Utilities import Vec2, Rectangle
+import FogofWar
 
 class Room():
 
@@ -294,8 +295,10 @@ class LevelGenerator():
                     
         return mapToRender
                     
-    def DrawRooms(self, cam:Camera, overlays):
+    def DrawRooms(self, cam:Camera, overlays, enableFogOfWar = False):
         mapToRender = self._getDrawRoomData(cam, overlays)
+        if enableFogOfWar:
+            visibleTiles = FogofWar.FogofWar.determine_vision(7, (cam.position.x, cam.position.y), mapToRender)
         rowData = ""
         #create border data
         for __ in range(cam.width + 3):
@@ -304,7 +307,18 @@ class LevelGenerator():
         for y in range(len(mapToRender)):
             builtRow = cam.borderCharacter
             for x in range(len(mapToRender[y])):
-                builtRow += mapToRender[y][x]
+                if enableFogOfWar:
+                    foundTile = False
+                    for tile in visibleTiles:
+                        if tile[0] == x + cam.rect.bottomLeft.x and tile[1] == y + cam.rect.topRight.y:
+                            builtRow += mapToRender[y][x]
+                            visibleTiles.remove(tile)
+                            foundTile = True
+                            break
+                    if not foundTile:
+                        builtRow += " "
+                else:
+                    builtRow += mapToRender[y][x]
             builtRow += cam.borderCharacter
             print(builtRow)
         print(rowData)
