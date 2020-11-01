@@ -377,6 +377,7 @@ class GameManager():
 
     def spawnArtifact(self):
         spawnArtifact = random.randint(0,10)
+        numberOfArtifact = 0
         if spawnArtifact == 1:
             numberOfArtifact = 1
         while numberOfArtifact > 0:
