@@ -74,12 +74,12 @@ class GameManager():
 
     def __init__(self):
         #randomRoom = random.randint(0,len(Maps.UniqueRooms.ROOMS)-1)
-        self.map = self.convertMapData(Maps.UniqueRooms.STARTING_ROOM)
+        #self.map = self.convertMapData(Maps.UniqueRooms.STARTING_ROOM)
         self.levelGenerator = LevelGeneration.LevelGenerator(Maps.UniqueRooms.ROOMS)
-        self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
-        #self.levelGenerator.GenerateLevel(15, 5, 8, 5)
-        #self.map = self.levelGenerator.BuildMapFromRoomData()
-        self.map = self.levelGenerator.rooms[0].data
+        #self.levelGenerator.rooms = [LevelGeneration.Room(self.map, Vec2(0,0), 0)]
+        self.levelGenerator.GenerateLevel(15, 5, 8, 5)
+        self.map = self.levelGenerator.BuildMapFromRoomData()
+        #self.map = self.levelGenerator.rooms[0].data
         
         self.player = PlayerInfo(input("What is your name? "), 0, 1, 1)
 
@@ -377,6 +377,7 @@ class GameManager():
 
     def spawnArtifact(self):
         spawnArtifact = random.randint(0,10)
+        numberOfArtifact = 0
         if spawnArtifact == 1:
             numberOfArtifact = 1
         while numberOfArtifact > 0:

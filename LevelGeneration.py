@@ -50,6 +50,18 @@ class Room():
         else:
             return False
 
+    def __getitem__(self, key : (int,int)) -> str:
+        if len(key) != 2:
+            raise TypeError("Key must be a 2 integer tuple")
+        x,y = key
+        return self.data[y][x]
+
+    def __setitem__(self, key : (int,int), value : str) -> None:
+        if len(key) != 2:
+            raise TypeError("Key must be a 2 integer tuple")
+        x,y = key
+        self.data[y][x] = value 
+
     #---------------------------------------------------------------------------------------------------------------------------------------
 
 class LevelGenerator():
@@ -90,13 +102,15 @@ class LevelGenerator():
         numberOfRooms = 0
         numberOfMainRooms = 0
         mainRoomCap = random.randint(minMainRooms, maxMainRooms)
+        directionsToGo = 1
         while numberOfMainRooms < mainRoomCap:
-            directionsToGo = random.randint(1,2)
+            
             direction = 1
             if directionsToGo == 1:
                 direction = random.randint(2, 3)
             elif directionsToGo == 2:
                 direction = random.randint(1, 2)
+
             lastDirection = direction
             for d in range(1,4):
                 rand = random.randint(1,3)
@@ -112,32 +126,32 @@ class LevelGenerator():
                             room.position.x += self.rooms[len(self.rooms) - 1].width + corridorLength
                         elif d == 3:
                             room.position.y += self.rooms[len(self.rooms) - 1].height + corridorLength
-                    if lastDirection != 0:
-                        holeX = 0
-                        holeY = 0
-                        if lastDirection == 1:
-                            holeX = math.ceil(room.width / 2)
-                            holeY = room.height - 1
-                        elif lastDirection == 2:
-                            holeX = 0
-                            holeY = math.ceil(room.height / 2)
-                        elif lastDirection == 3:  
-                            holeX = math.ceil(room.width / 2)
-                            holeY = 0
-                        room.data[holeY][holeX] = " "
-                    if d == direction:
+                    if numberOfRooms > 0:
+                        r = self.rooms[len(self.rooms)-1]
                         holeX = 0
                         holeY = 0
                         if d == 1:
-                            holeX = math.ceil(room.width / 2)
-                            holeY = 0
+                            holeX = math.ceil(r.width / 2)
+                            holeY = r.height - 1
                         elif d == 2:
-                            holeX = room.width - 1
-                            holeY = math.ceil(room.height / 2)
+                            holeX = 0
+                            holeY = math.ceil(r.height / 2)
                         elif d == 3:  
-                            holeX = math.ceil(room.width / 2)
-                            holeY = room.height - 1
-                        room.data[holeY][holeX] = " "
+                            holeX = math.ceil(r.width / 2)
+                            holeY = 0
+                        r[holeX, holeY] = " "
+                    holeX = 0
+                    holeY = 0
+                    if d == 1:
+                        holeX = math.ceil(room.width / 2)
+                        holeY = 0
+                    elif d == 2:
+                        holeX = room.width - 1
+                        holeY = math.ceil(room.height / 2)
+                    elif d == 3:  
+                        holeX = math.ceil(room.width / 2)
+                        holeY = room.height - 1
+                    room[holeX, holeY] = " "
                     if numberOfRooms < roomCap or d == direction:
                         numberOfRooms += 1
                         self.rooms.append(room)
