@@ -8,9 +8,9 @@ pass
 
 #Question 2
 def fraction(self):
-    sum_fractions([[18, 13], [4, 5]]) ➞ 2
+    sumOfFractions([[18, 13], [4, 5]]) ➞ 2
     fractionPartList = []
-    fractionPartList = sum_fractions.split(",")
+    fractionPartList = sumOfFractions.split(",")
     a = fractionPartList[0][0]
     b = fractionPartList[0][1]
     c = fractionPartList[1][0]
@@ -29,12 +29,12 @@ def fraction(self):
 
 #Question 3
 def findLongestWord(self):
-    longest_word("Margaret's toy is a pretty doll.")
-    longest_word = []
-    longestWord = longest_word.split(" ")
+    sentence = "Margaret's toy is a pretty doll."
+    longestWord = []
+    longestWord = sentence.split(" ")
     for word in len(longestWord):
         currentLongestWord = 0
         if len(word) > lengthOfLongestWord:
             lengthOfLongestWord = len(word)
             longestWord = word
-    print(currentLongestWord)
+    print(longestWord)
