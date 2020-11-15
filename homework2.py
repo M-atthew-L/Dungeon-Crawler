@@ -82,11 +82,18 @@ def formatNumber(number):
 
 
 def sumFromArray(array):
-    listOfFactors = []
-    listOfNumbers = array.split(",")
-    for num in listOfNumbers:
-        finalAnswer += num 
+    finalAnswer = 0
+    arrayOfNumbers = []
+    for num in range(len(array)):
+        arrayOfNumbers.append(num)
+    for num in arrayOfNumbers:
+        finalAnswer += (num + 1)
     return finalAnswer
+
+def getLength(array):
+    stringArray = str(array)
+    lengthOfArray = len(stringArray)
+    return lengthOfArray
 
 
 if __name__ == "__main__": 
@@ -104,3 +111,11 @@ if __name__ == "__main__":
     assert formatNumber(100000) == "100,000", f"Returns {formatNumber(100000)} instead of 100,000"
     print(formatNumber(20))
     assert formatNumber(20) == "20", f"Returns {formatNumber(20)} instead of 20"
+    print(sumFromArray([1,2,3]))
+    assert sumFromArray([1,2,3]) == 6, f"Returns {sumFromArray([1,2,3])} instead of 6"
+    '''
+    print(sumFromArray([1,[2,[1]],3]))
+    assert sumFromArray([1, [2, [1]], 3]) == 7, f"Returns {sumFromArray([1, [2, [1]], 3])} instead of 7"
+    print(getLength([1, [2, 3]]))
+    assert getLength([1, [2, 3]]) == 3, f"Returns {getLength([1, [2, 3]])} instead of 3"
+    '''
